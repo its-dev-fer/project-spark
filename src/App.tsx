@@ -14,7 +14,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/settingsAccount" element={<AccountSettingsPage />} />
+        <Route path="/account" element={<AccountSettingsPage />} />
       </Routes>
     </Router>
   )
