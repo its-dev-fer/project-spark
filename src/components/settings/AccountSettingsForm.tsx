@@ -80,16 +80,15 @@ export function AccountSettingsForm() {
         </div>
 
         <div className="pt-4 border-t">
-          <h3 className="text-lg font-medium mb-4">Cambiar contraseña</h3>
           
           <div className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="password">Nueva contraseña</Label>
+              <Label htmlFor="password">Cambiar contraseña</Label>
               <Input
                 id="password"
                 name="password"
                 type="password"
-                placeholder="Nueva contraseña"
+                placeholder="Contraseña"
                 value={formData.password}
                 onChange={handleChange}
               />
@@ -101,7 +100,7 @@ export function AccountSettingsForm() {
                 id="confirmPassword"
                 name="confirmPassword"
                 type="password"
-                placeholder="Confirma la nueva contraseña"
+                placeholder="Contraseña"
                 value={formData.confirmPassword}
                 onChange={handleChange}
               />
