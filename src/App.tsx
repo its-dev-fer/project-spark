@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom'
 import './App.css'
-import Login from './pages/auth/Login'
-import Register from './pages/auth/Register'
+import Login from './Pages/Auth/Login'
+import Register from './Pages/Auth/Register'
 
 function App() {
   const [count, setCount] = useState(0)
