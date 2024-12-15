@@ -30,11 +30,18 @@ export function AccountSettingsForm() {
     }));
   };
 
+  const isFormValid = 
+    formData.fullName.trim() !== '' &&
+    formData.email.trim() !== '' &&
+    formData.phone.trim() !== '' &&
+    formData.password.trim() !== '' &&
+    formData.confirmPassword.trim() !== '' &&
+    formData.password === formData.confirmPassword;
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     console.log('Saving changes:', formData);
-
     toast({
       title: "Cambios guardados",
       description: "Los cambios han sido guardados exitosamente.",
@@ -80,7 +87,6 @@ export function AccountSettingsForm() {
         </div>
 
         <div className="pt-4 border-t">
-          
           <div className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="password">Cambiar contraseña</Label>
@@ -100,7 +106,7 @@ export function AccountSettingsForm() {
                 id="confirmPassword"
                 name="confirmPassword"
                 type="password"
-                placeholder="Contraseña"
+                placeholder="Confirma la contraseña"
                 value={formData.confirmPassword}
                 onChange={handleChange}
               />
@@ -109,7 +115,7 @@ export function AccountSettingsForm() {
         </div>
       </div>
 
-      <Button type="submit" className="w-auto">
+      <Button type="submit" className="w-auto" disabled={!isFormValid}>
         Guardar cambios
       </Button>
     </form>
