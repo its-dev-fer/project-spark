@@ -9,11 +9,7 @@ import {
   SidebarGroup,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
-import {
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-} from "@/components/ui/popover";
+import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
 import { ChevronDown, Plus, Menu } from "lucide-react";
 import {
   AlertDialog,
@@ -24,11 +20,11 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 
 const CustomSidebar = ({ children }: { children: React.ReactNode }) => {
   const navigate = useNavigate();
+  const [openLogout, setOpenLogout] = React.useState(false);
 
   const handleLogout = () => {
     navigate("/login");
@@ -36,7 +32,7 @@ const CustomSidebar = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <SidebarProvider>
-      <div className="flex h-screen bg-[#ffffff]">
+      <div className="flex h-screen bg-white overflow-hidden">
         <Sidebar
           side="left"
           className="fixed top-0 left-0 z-50 h-full bg-white transition-transform transform w-[75%] sm:w-64 lg:translate-x-0 lg:block hidden"
@@ -51,22 +47,18 @@ const CustomSidebar = ({ children }: { children: React.ReactNode }) => {
                   <button className="flex flex-col text-left">
                     <div className="flex items-center">
                       <h1 className="text-lg font-bold mr-1">Nombre del evento</h1>
-                      <ChevronDown
-                        className="w-4 h-4 text-muted-foreground"
-                        style={{ marginLeft: "auto" }}
-                      />
+                      <ChevronDown className="w-4 h-4 text-muted-foreground" style={{ marginLeft: "auto" }} />
                     </div>
                     <p className="text-sm text-muted-foreground">Tipo de evento</p>
                   </button>
                 </PopoverTrigger>
-                <PopoverContent className="w-56 p-3 translate-x-60 -translate-y-12 h-60 flex flex-col justify-between">
+                <PopoverContent className="w-56 p-3 h-60 flex flex-col justify-between">
                   <h2 className="text-sm font-medium mb-2">Mis eventos</h2>
                   <div className="space-y-2">
                     <button className="block w-full text-left text-sm px-3 py-2 hover:bg-muted rounded">
                       Nombre del evento
                     </button>
                   </div>
-                  <div className="flex-grow"></div>
                   <button className="flex items-center w-full text-left text-sm px-3 py-2 hover:bg-muted rounded">
                     <Plus className="w-4 h-4 mr-2 text-black" /> Nuevo evento
                   </button>
@@ -77,28 +69,16 @@ const CustomSidebar = ({ children }: { children: React.ReactNode }) => {
 
           <SidebarContent>
             <SidebarGroup>
-              <a
-                href="#"
-                className="block py-2 px-4 text-muted-foreground hover:bg-muted"
-              >
+              <a href="#" className="block py-2 px-4 text-muted-foreground hover:bg-muted">
                 Invitados
               </a>
-              <a
-                href="#"
-                className="block py-2 px-4 text-muted-foreground hover:bg-muted"
-              >
+              <a href="#" className="block py-2 px-4 text-muted-foreground hover:bg-muted">
                 Hoteles
               </a>
-              <a
-                href="#"
-                className="block py-2 px-4 text-muted-foreground hover:bg-muted"
-              >
+              <a href="#" className="block py-2 px-4 text-muted-foreground hover:bg-muted">
                 Detalles del evento
               </a>
-              <a
-                href="#"
-                className="block py-2 px-4 text-muted-foreground hover:bg-muted"
-              >
+              <a href="#" className="block py-2 px-4 text-muted-foreground hover:bg-muted">
                 Contacto
               </a>
             </SidebarGroup>
@@ -115,7 +95,7 @@ const CustomSidebar = ({ children }: { children: React.ReactNode }) => {
                   <p className="text-xs text-muted-foreground">Tipo de plan</p>
                 </button>
               </PopoverTrigger>
-              <PopoverContent className="w-60 p-3 translate-x-64 translate-y-10 h-auto flex flex-col justify-between">
+              <PopoverContent className="w-60 p-3 h-auto flex flex-col justify-between">
                 <h2 className="text-sm font-medium mb-2">Configuración</h2>
                 <div className="space-y-2">
                   <button className="block w-full text-left text-sm px-3 py-2 hover:bg-muted rounded">
@@ -125,26 +105,12 @@ const CustomSidebar = ({ children }: { children: React.ReactNode }) => {
                     Ajustes de cuenta
                   </button>
                 </div>
-                <div className="flex-grow"></div>
-                <AlertDialog>
-                  <AlertDialogTrigger asChild>
-                    <button className="block w-full text-left text-sm px-3 py-2 hover:bg-muted rounded">
-                      Cerrar sesión
-                    </button>
-                  </AlertDialogTrigger>
-                  <AlertDialogContent>
-                    <AlertDialogHeader>
-                      <AlertDialogTitle>¿Está seguro de que desea cerrar sesión?</AlertDialogTitle>
-                      <AlertDialogDescription>
-                        Una vez que cierre sesión, deberá iniciar sesión nuevamente para acceder a su cuenta.
-                      </AlertDialogDescription>
-                    </AlertDialogHeader>
-                    <AlertDialogFooter>
-                      <AlertDialogCancel>Cancelar</AlertDialogCancel>
-                      <AlertDialogAction onClick={handleLogout}>Cerrar sesión</AlertDialogAction>
-                    </AlertDialogFooter>
-                  </AlertDialogContent>
-                </AlertDialog>
+                <button
+                  onClick={() => setOpenLogout(true)} 
+                  className="block w-full text-left text-sm px-3 py-2 hover:bg-muted rounded"
+                >
+                  Cerrar sesión
+                </button>
               </PopoverContent>
             </Popover>
           </SidebarFooter>
@@ -159,6 +125,30 @@ const CustomSidebar = ({ children }: { children: React.ReactNode }) => {
           </SidebarTrigger>
           {children}
         </main>
+
+        <div className="fixed bottom-4 right-4 z-50 lg:hidden">
+          <button
+            className="btn bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+            onClick={() => setOpenLogout(true)} 
+          >
+            Cerrar sesión
+          </button>
+        </div>
+
+        <AlertDialog open={openLogout} onOpenChange={setOpenLogout}>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>¿Está seguro de que desea cerrar sesión?</AlertDialogTitle>
+              <AlertDialogDescription>
+                Una vez que cierre sesión, deberá iniciar sesión nuevamente para acceder a su cuenta.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel onClick={() => setOpenLogout(false)}>Cancelar</AlertDialogCancel>
+              <AlertDialogAction onClick={handleLogout}>Cerrar sesión</AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </div>
     </SidebarProvider>
   );
