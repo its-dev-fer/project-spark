@@ -15,13 +15,13 @@ import {
 } from "@/components/ui/popover";
 import { ChevronDown, Plus, Menu } from "lucide-react";
 
-const CustomSidebar = () => {
+const CustomSidebar = ({ children }: { children: React.ReactNode }) => {
   return (
     <SidebarProvider>
       <div className="flex h-screen bg-[#ffffff]">
         <Sidebar
           side="left"
-         className="fixed top-0 left-0 z-50 h-full bg-white transition-transform transform w-[75%] sm:w-64 lg:translate-x-0 lg:block hidden"
+          className="fixed top-0 left-0 z-50 h-full bg-white transition-transform transform w-[75%] sm:w-64 lg:translate-x-0 lg:block hidden"
         >
           <SidebarHeader className="hover:bg-gray-200 transition-colors">
             <div className="relative flex items-center gap-2">
@@ -123,6 +123,7 @@ const CustomSidebar = () => {
           >
             <Menu className="w-6 h-6 text-gray-700" />
           </SidebarTrigger>
+          {children}
         </main>
       </div>
     </SidebarProvider>
