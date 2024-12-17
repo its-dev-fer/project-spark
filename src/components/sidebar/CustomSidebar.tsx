@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Sidebar,
   SidebarProvider,
@@ -24,18 +25,14 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog"
-import { useNavigate } from "react-router-dom";
-
-
+} from "@/components/ui/alert-dialog";
 
 const CustomSidebar = ({ children }: { children: React.ReactNode }) => {
   const navigate = useNavigate();
 
-  const logOut = () => {
+  const handleLogout = () => {
     navigate("/login");
-  }
-
+  };
 
   return (
     <SidebarProvider>
@@ -107,24 +104,49 @@ const CustomSidebar = ({ children }: { children: React.ReactNode }) => {
             </SidebarGroup>
           </SidebarContent>
 
-          <SidebarFooter>
-            <AlertDialog>
-              <AlertDialogTrigger>
-                <button className="btn">Cerrar sesión</button>
-              </AlertDialogTrigger>
-              <AlertDialogContent>
-                <AlertDialogHeader>
-                  <AlertDialogTitle>¿Estás seguro?</AlertDialogTitle>
-                  <AlertDialogDescription>
-                    Esto cerrará tu sesión.
-                  </AlertDialogDescription>
-                </AlertDialogHeader>
-                <AlertDialogFooter>
-                  <AlertDialogCancel>Cancelar</AlertDialogCancel>
-                  <AlertDialogAction onClick={logOut}>Continuar</AlertDialogAction>
-                </AlertDialogFooter>
-              </AlertDialogContent>
-            </AlertDialog>
+          <SidebarFooter className="hover:bg-gray-200 transition-colors">
+            <Popover>
+              <PopoverTrigger asChild>
+                <button className="flex flex-col text-left w-full px-4 py-2">
+                  <div className="flex items-center">
+                    <p className="text-sm font-medium mr-auto">Nombre Usuario</p>
+                    <ChevronDown className="w-4 h-4 text-muted-foreground ml-20" />
+                  </div>
+                  <p className="text-xs text-muted-foreground">Tipo de plan</p>
+                </button>
+              </PopoverTrigger>
+              <PopoverContent className="w-60 p-3 translate-x-64 translate-y-10 h-auto flex flex-col justify-between">
+                <h2 className="text-sm font-medium mb-2">Configuración</h2>
+                <div className="space-y-2">
+                  <button className="block w-full text-left text-sm px-3 py-2 hover:bg-muted rounded">
+                    Actualizar a premium
+                  </button>
+                  <button className="block w-full text-left text-sm px-3 py-2 hover:bg-muted rounded">
+                    Ajustes de cuenta
+                  </button>
+                </div>
+                <div className="flex-grow"></div>
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <button className="block w-full text-left text-sm px-3 py-2 hover:bg-muted rounded">
+                      Cerrar sesión
+                    </button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>¿Está seguro de que desea cerrar sesión?</AlertDialogTitle>
+                      <AlertDialogDescription>
+                        Una vez que cierre sesión, deberá iniciar sesión nuevamente para acceder a su cuenta.
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                      <AlertDialogAction onClick={handleLogout}>Cerrar sesión</AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
+              </PopoverContent>
+            </Popover>
           </SidebarFooter>
         </Sidebar>
 
