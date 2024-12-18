@@ -5,7 +5,8 @@ import Login from './Pages/Auth/Login'
 import Register from './Pages/Auth/Register'
 import AccountSettingsPage from './Pages/settings/account'
 
-import CustomSidebar from './components/sidebar/CustomSidebar'
+
+
 
 function App() {
   const [count, setCount] = useState(0)
@@ -13,18 +14,6 @@ function App() {
   return (
     <Router>
       <Routes>
-       
-        <Route
-          path="/home"
-          element={
-            <>
-              <CustomSidebar /> 
-              <div>Home Page</div> 
-            </>
-          }
-        />
-        
-       
         <Route path="/login" element={<Login />} />
         <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/register" element={<Register />} />

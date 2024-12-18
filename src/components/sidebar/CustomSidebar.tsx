@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import { useNavigate } from "react-router-dom";
+import { Sheet } from '@/components/ui/sheet'
 import {
   Sidebar,
   SidebarProvider,
@@ -10,7 +11,7 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
-import { ChevronDown, Plus, Menu, Sheet } from "lucide-react";
+import { ChevronDown, Plus, Menu } from "lucide-react";
 import {
   AlertDialog,
   AlertDialogAction,
