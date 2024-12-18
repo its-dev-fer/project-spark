@@ -1,9 +1,5 @@
-<<<<<<< HEAD
-import React from "react";
+import React, {useState} from "react";
 import { useNavigate } from "react-router-dom";
-=======
-import React, { useState } from "react";
->>>>>>> 8407460 (sheet)
 import {
   Sidebar,
   SidebarProvider,
@@ -14,7 +10,7 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
-import { ChevronDown, Plus, Menu } from "lucide-react";
+import { ChevronDown, Plus, Menu, Sheet } from "lucide-react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -25,7 +21,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { SheetClose } from "../ui/sheet";
+import { SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle } from "../ui/sheet";
 
 const CustomSidebar = ({ children }: { children: React.ReactNode }) => {
   const navigate = useNavigate();
@@ -33,6 +29,16 @@ const CustomSidebar = ({ children }: { children: React.ReactNode }) => {
 
   const handleLogout = () => {
     navigate("/login");
+  };
+
+  const [isSheetOpen, setSheetOpen] = useState(false);
+
+  const handleNewEventClick = () => {
+    setSheetOpen(true);
+  };
+
+  const handleCloseSheet = () => {
+    setSheetOpen(false);
   };
 
   return (
