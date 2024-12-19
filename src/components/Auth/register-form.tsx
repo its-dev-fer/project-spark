@@ -37,7 +37,7 @@ export function RegisterForm() {
       const response = await fetch('http://localhost:3030/user/register', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Accept': 'application/json'
         },
         body: JSON.stringify(formData)
       });
