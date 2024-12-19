@@ -2,15 +2,22 @@ import { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { TabsContent } from "@/components/ui/tabs"; 
+import { useNavigate } from "react-router-dom";
 
 export function RegisterForm() {
+  const navigate = useNavigate();
+
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    phone: '',
+    // phone: '', // lo comento porque por lo que vi en el back no solicitan este campo
     password: '',
   });
+
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -20,9 +27,38 @@ export function RegisterForm() {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Register attempt with:', formData);
+    setError(null);
+    setSuccess(false);
+    setLoading(true);
+
+    try {
+      const response = await fetch('http://localhost:3030/user/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        setError(errorData.message || 'Error desconocido al registrar el usuario');
+      } else {
+        const data = await response.json();
+        console.log('Registro exitoso:', data);
+        setSuccess(true);
+        setTimeout(() => {
+          navigate('/account');
+        }, 2000);
+      }
+    } catch (err: any) {
+      console.error('Error al conectar con la API:', err);
+      setError('No se pudo conectar con el servidor');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -52,6 +88,8 @@ export function RegisterForm() {
             required
           />
         </div>
+        {/* 
+        Se comenta el campo de teléfono, ya que la API no lo solicita.
         <div className="space-y-2 text-left">
           <Label htmlFor="phone">Teléfono</Label>
           <Input
@@ -64,6 +102,7 @@ export function RegisterForm() {
             required
           />
         </div>
+        */}
         <div className="space-y-2 text-left">
           <Label htmlFor="password">Contraseña</Label>
           <Input
@@ -75,10 +114,12 @@ export function RegisterForm() {
             required
           />
         </div>
-        <div className="flex justify-start mt-4">
-          <Button type="submit" className="w-auto">
-            Crear cuenta
+        <div className="flex flex-col gap-2 mt-4">
+          <Button type="submit" className="w-auto" disabled={loading}>
+            {loading ? 'Creando cuenta...' : 'Crear cuenta'}
           </Button>
+          {error && <p className="text-red-500 text-sm">{error}</p>}
+          {success && <p className="text-green-500 text-sm">¡Registro exitoso!</p>}
         </div>
       </form>
     </div>
