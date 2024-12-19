@@ -6,6 +6,8 @@ import Register from './Pages/Auth/Register'
 import AccountSettingsPage from './Pages/settings/account'
 
 
+
+
 function App() {
   const [count, setCount] = useState(0)
 

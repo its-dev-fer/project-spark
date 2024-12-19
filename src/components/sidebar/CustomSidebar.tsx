@@ -1,5 +1,6 @@
-import React from "react";
+import React, {useState} from "react";
 import { useNavigate } from "react-router-dom";
+import { Sheet } from '@/components/ui/sheet'
 import {
   Sidebar,
   SidebarProvider,
@@ -21,6 +22,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle } from "../ui/sheet";
 
 const CustomSidebar = ({ children }: { children: React.ReactNode }) => {
   const navigate = useNavigate();
@@ -28,6 +30,16 @@ const CustomSidebar = ({ children }: { children: React.ReactNode }) => {
 
   const handleLogout = () => {
     navigate("/login");
+  };
+
+  const [isSheetOpen, setSheetOpen] = useState(false);
+
+  const handleNewEventClick = () => {
+    setSheetOpen(true);
+  };
+
+  const handleCloseSheet = () => {
+    setSheetOpen(false);
   };
 
   return (
@@ -59,7 +71,11 @@ const CustomSidebar = ({ children }: { children: React.ReactNode }) => {
                       Nombre del evento
                     </button>
                   </div>
-                  <button className="flex items-center w-full text-left text-sm px-3 py-2 hover:bg-muted rounded">
+                  <div className="flex-grow"></div>
+                  <button
+                    className="flex items-center w-full text-left text-sm px-3 py-2 hover:bg-muted rounded"
+                    onClick={handleNewEventClick}
+                  >
                     <Plus className="w-4 h-4 mr-2 text-black" /> Nuevo evento
                   </button>
                 </PopoverContent>
@@ -150,6 +166,39 @@ const CustomSidebar = ({ children }: { children: React.ReactNode }) => {
           </AlertDialogContent>
         </AlertDialog>
       </div>
+
+      
+      <Sheet open={isSheetOpen} onOpenChange={setSheetOpen}>
+        <SheetContent side="bottom">
+          <SheetHeader>
+            <SheetTitle>Nuevo Evento</SheetTitle>
+            <SheetDescription>
+              Crea un nuevo evento y configura sus detalles.
+            </SheetDescription>
+          </SheetHeader>
+
+          
+          <div className="flex flex-col space-y-4">
+            <input type="text" placeholder="Nombre del evento" className="p-2 border rounded" />
+            <input type="text" placeholder="Fecha y hora" className="p-2 border rounded" />
+          </div>
+
+          <SheetFooter>
+            <button
+              className="px-4 py-2 bg-blue-500 text-white rounded"
+              onClick={handleCloseSheet}
+            >
+              Guardar evento
+            </button>
+            <SheetClose
+              className="px-4 py-2 bg-gray-200 text-black rounded"
+              onClick={handleCloseSheet}
+            >
+              Cancelar
+            </SheetClose>
+          </SheetFooter>
+        </SheetContent>
+      </Sheet>
     </SidebarProvider>
   );
 };
