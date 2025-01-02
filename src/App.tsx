@@ -4,7 +4,7 @@ import './App.css'
 import Login from './Pages/Auth/Login'
 import Register from './Pages/Auth/Register'
 import AccountSettingsPage from './Pages/settings/account'
-
+import PlansView from './Pages/PlansView'
 
 
 
@@ -18,6 +18,7 @@ function App() {
         <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/register" element={<Register />} />
         <Route path="/account" element={<AccountSettingsPage />} />
+        <Route path="/PlansView" element={<PlansView />} />
       </Routes>
     </Router>
   )
